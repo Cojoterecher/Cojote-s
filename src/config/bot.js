@@ -547,3 +547,45 @@ export default botConfig;
 
 
 
+
+
+
+
+
+const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
+
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMembers // Required to read the member count
+    ]
+});
+
+// Replace with your actual Discord Server ID
+const GUILD_ID = '1058290812556935179'; 
+
+client.once('ready', () => {
+    console.log(`Logged in as ${client.user.tag}!`);
+
+    // Update status every 10 minutes (600,000 milliseconds)
+    setInterval(async (300,000) => {
+        try {
+            const guild = await client.guilds.fetch(GUILD_ID);
+            const memberCount = guild.memberCount;
+
+            client.user.setPresence({
+                activities: [{ 
+                    name: `${memberCount} members`, 
+                    type: ActivityType.Watching 
+                }],
+                status: 'online',
+            });
+            
+            console.log(`Updated status to: Watching ${memberCount} members`);
+        } catch (error) {
+            console.error('Failed to update member count status:', error);
+        }
+    }, 600000); 
+});
+
+client.login('YOUR_BOT_TOKEN');
