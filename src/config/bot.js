@@ -568,7 +568,7 @@ client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 
     // Update status every 10 minutes (600,000 milliseconds)
-    setInterval(async (300,000 milliseconds) => {
+    setInterval(async () => {
         try {
             const guild = await client.guilds.fetch(GUILD_ID);
             const memberCount = guild.memberCount;
